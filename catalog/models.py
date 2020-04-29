@@ -1,7 +1,6 @@
 from django.db import models
 
 # Create your models here.
-
 class Language(models.Model):
 	lang = models.CharField(max_length=200, help_text='Enter the book language')
 	
@@ -17,6 +16,12 @@ class Genre(models.Model):
 		return self.name
         
 
+class Publisher(models.Model):
+	publisher = models.CharField(max_length=200, help_text='Enter Book\'s Publisher')
+
+	def __str__(self):
+		return self.publisher
+
 from django.urls import reverse
 	
 class Book(models.Model):
@@ -24,35 +29,29 @@ class Book(models.Model):
     author = models.ForeignKey('Author', on_delete=models.SET_NULL, null = True)
     summary = models.TextField(max_length=1000, help_text='Enter a brief description of the book')
     isbn = models.CharField('ISBN', max_length=13, help_text='13 Character ISBN Number')
-    language = models.ManyToManyField(Language, help_text='Select a language/s for this book')
-    genre = models.ManyToManyField(Genre, help_text='Select a genre for this book')
-    review = models.TextField(max_length=1000, help_text='Give the book a review', null = True)
-    
+    review = models.TextField(max_length=1000, help_text='Give the book a review', null = True, blank=True)
+    publisher = models.ForeignKey('Publisher', on_delete=models.SET_NULL, null=True, blank = True)
+    yearPub = models.DateField(null=True, )
+
     def __str__(self):
-        return self.title
-	
+        return self.title	
+
+
 import uuid
 
 class BookInstance(models.Model):
 	id = models.UUIDField(primary_key=True, default=uuid.uuid4, help_text='Unique ID')
 	book = models.ForeignKey('Book', on_delete=models.SET_NULL, null=True)
-	imprint = models.CharField(max_length=200)
 	due_back = models.DateField(null=True, blank=True)
 	
-	LOAN_STATUS = (
-		('m', 'Maintenance'),
-		('o', 'On Loan'),
-		('a', 'Available'),
-		('r', 'Reserved'),
-	)
+	LOAN_STATUS = (('a', 'Available'),
+		('r', 'Reserved'),)
 	
-	status = models.CharField(
-		max_length=1,
+	status = models.CharField(max_length=1,
 		choices= LOAN_STATUS,
 		blank = True,
 		default = 'm',
-		help_text = 'Book Availability',
-	)
+		help_text = 'Book Availability',)
 	
 	class Meta:
 		ordering = ['due_back']
