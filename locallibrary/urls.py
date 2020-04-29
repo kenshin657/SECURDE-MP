@@ -16,6 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
+
 urlpatterns = [
     path('admin/', admin.site.urls),
 ]
@@ -32,7 +33,6 @@ urlpatterns += [
 
 from django.views.generic import RedirectView
 urlpatterns += [
-	#path(''. RedirectView.as_view(url='catalog/', permanent=True))
 	path('', RedirectView.as_view(url='catalog/',permanent=True))
 ]
 

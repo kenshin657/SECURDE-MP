@@ -15,6 +15,7 @@ class Genre(models.Model):
 	def __str__(self):
 		"""String for representing the Model Object."""
 		return self.name
+        
 
 from django.urls import reverse
 	
@@ -25,6 +26,8 @@ class Book(models.Model):
     isbn = models.CharField('ISBN', max_length=13, help_text='13 Character ISBN Number')
     language = models.ManyToManyField(Language, help_text='Select a language/s for this book')
     genre = models.ManyToManyField(Genre, help_text='Select a genre for this book')
+    review = models.TextField(max_length=1000, help_text='Give the book a review', null = True)
+    
     def __str__(self):
         return self.title
 	
