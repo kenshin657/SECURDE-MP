@@ -14,30 +14,14 @@
 				<tr>
 					<th>Title</th>
 					<th>Author</th>
-					<th>Publisher</th>
-					<th>Year of Publication</th>
-					<th>ISBN</th>
-					<th>Status</th>
-					<th>Available On</th>
-					<th>Reviews</th>
-					<th></th>
+					<th>Review</th>
 				</tr>
 
 				{% for i in books %}
 					<tr>
-						<td>{{i.book}}</td>
-						<td>{{i.book.author}}</td>
-						<td>{{i.book.publisher}}</td>
-						<td>{{i.book.yearPub}}</td>
-						<td>{{i.book.isbn}}</td>
-						<td>{{i.status}}</td>
-						<td>{{i.due_back}}</td>
-						<td width="45px">{{i.book.review}}</td>
-						{% if i.status == 'a' %}
-							<td><a href="">Reserve</a></td>
-						{% else %}
-							<td></td>
-						{% endif %}
+						<td><a href="{% url 'instance' i.id %}" class="btn btn-sm btn-info">{{i.title}}</a></td>
+						<td>{{i.author}}</td>
+						<td>{{i.review}}</td>
 					</tr>
 				{% endfor %}
 					 
