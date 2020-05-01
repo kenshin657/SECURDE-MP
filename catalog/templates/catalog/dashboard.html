@@ -23,8 +23,8 @@
 						<td>{{i.book}}</td>
 						<td>{{i.book.author}}</td>
 						<td>{{i.due_back}}</td>
-						<td><a href="" class="btn btn-sm btn-danger">Return</a></td>
-					</tr>
+						<td><a href="{% url 'ret' i.id %}" class="btn btn-sm btn-danger">Return</a></td>
+					</tr> 
 					{% endfor %}
 				</table>
 			</div>
